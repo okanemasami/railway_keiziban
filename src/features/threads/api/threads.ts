@@ -1,7 +1,7 @@
 import { fetchWithErrorHandling } from '../../../shared/lib/http'; // ユーザー定義: 共通HTTPユーティリティ
 import { localCache } from '../../../shared/lib/cache'; // ユーザー定義: シンプルなローカルキャッシュ
 import { CACHE } from '../../../constants'; // ユーザー定義: キャッシュ設定（キー接頭辞/TTL）
-import type { Thread, PostsResponse, ApiError } from '../types'; // ユーザー定義: 型定義（Thread, PostsResponse, ApiError）
+import type { Thread, Post, PostsResponse, ApiError } from '../types'; // ユーザー定義: 型定義（Thread, PostsResponse, ApiError）
 
 const API_CONFIG = { // 定数: APIエンドポイント設定
   BASE_URL: 'https://railway.bulletinboard.techtrain.dev/threads', // ベースURL
@@ -58,12 +58,11 @@ export async function createThread(title: string): Promise<Thread> { // スレ�
   return newThread; // 生成されたスレッドを返却
 }
 
-/*
-export async function createPost(post: string): Promise<Post> { // スレッド作成
-  const url = API_CONFIG.BASE_URL; // POST先URL
-  const newPost = await fetchWithErrorHandling<Post>(url, { // 共通HTTPでPOST実行
-    method: 'POST', // メソッド指定
-    body: { post }, // ボディ（タイトルのみ）
+export async function createPost(threadId: string, post: string): Promise<Post> { // 投稿作成
+  const url = `${API_CONFIG.BASE_URL}/${threadId}/posts`;
+  const newPost = await fetchWithErrorHandling<Post>(url, {
+    method: 'POST',
+    body: { post },
   });
-  return newPost; // 生成されたスレッドを返却
-} */
+  return newPost; // 生成された投稿を返却
+}

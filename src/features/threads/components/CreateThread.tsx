@@ -10,10 +10,6 @@ export default function CreateThread() {
   const [title, setTitle] = useState<string>("");
   const { createThread, loading } = useCreateThread();
 
-  const handleBack = useCallback(() => {
-    navigate(ROUTES.HOME);
-  }, [navigate]);
-
   const handleTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   }, []);
@@ -48,12 +44,6 @@ export default function CreateThread() {
 
         <Button variant="primary" onClick={handleSubmitClick} disabled={loading}>
           スレッドを投稿
-        </Button>
-      </div>
-
-      <div style={{ marginTop: '20px' }}>
-        <Button variant="secondary" onClick={handleBack}>
-          ← スレッド一覧に戻る
         </Button>
       </div>
     </div>
